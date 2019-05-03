@@ -1,21 +1,49 @@
+import math
+
 class Matrix():
     def __init__(self, *values):
         self.values = values
+        self.size = int(math.sqrt(len(values)))
 
-    def add(self, another_matrix):
-        result = []
+    def print_matrix(self):
+        nr_of_column = 0
+        for value in self.values:
+            print(value, end = " ")
+            nr_of_column+=1
+            if (nr_of_column%self.size == 0):
+                print()
+        print()
 
-        for nr_of_value in range(0,4):
-            result.append(self.values[nr_of_value] + another_matrix.values[nr_of_value])
+    def __add__(self, B):
+        result_values = []
 
+        if type(B) is int:
+            for value in list(self.values):
+                result_values.append(value + B)
+
+        else:
+            if (self.size == B.size):
+
+                for value in list(self.values):
+                    result_values.append(value + B.values[self.values.index(value)])
+
+        result = Matrix(*result_values)
         return result
 
-    def product(self, another_matrix):
+    def __mul__(self, B):
+        result_values = []
 
-        result = []
-        result.append(self.values[0]*another_matrix[0]+self.values[2]*another_matrix[3])
-        result.append(self.values[0]*another_matrix[2]+self.values[2]*another_matrix[4])
-        result.append(self.values[3]*another_matrix[0]+self.values[4]*another_matrix[3])
-        result.append(self.values[3]*another_matrix[2]+self.values[4]*another_matrix[4])
+        if (self.size == B.size):
+            for i in range(self.size):
+                for j in range(self.size):
+                        sum = 0
+                        for element in range(self.size):
+                            sum += self.values[i*self.size+element]*B.values[j+element*self.size]
+                        result_values.append(sum)
 
+        result = Matrix(*result_values)
         return result
+
+
+if __name__ == '__main__':
+    main()
