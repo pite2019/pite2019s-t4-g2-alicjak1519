@@ -23,14 +23,61 @@ class Matrix():
 
         else:
             if (self.size == B.size):
-
                 for value in list(self.values):
                     result_values.append(value + B.values[self.values.index(value)])
 
         result = Matrix(*result_values)
         return result
 
-    def __mul__(self, B):
+    def __iadd__(self, B):
+        result_values = []
+
+        for value in list(self.values):
+            result_values.append(value + B)
+
+        result = Matrix(*result_values)
+        return result
+
+    def __isub__(self, B):
+        result_values = []
+
+        for value in list(self.values):
+            result_values.append(value - B)
+
+        result = Matrix(*result_values)
+        return result
+
+    def __radd__(self, B):
+        result_values = []
+
+        if type(B) is int:
+            for value in list(self.values):
+                result_values.append(value + B)
+
+        else:
+            if (self.size == B.size):
+                for value in list(self.values):
+                    result_values.append(value + B.values[self.values.index(value)])
+
+        result = Matrix(*result_values)
+        return result
+
+    def __sub__(self, B):
+        result_values = []
+
+        if type(B) is int:
+            for value in list(self.values):
+                result_values.append(value - B)
+
+        else:
+            if (self.size == B.size):
+                for value in list(self.values):
+                    result_values.append(value - B.values[self.values.index(value)])
+
+        result = Matrix(*result_values)
+        return result
+
+    def __matmul__(self, B):
         result_values = []
 
         if (self.size == B.size):
@@ -44,6 +91,22 @@ class Matrix():
         result = Matrix(*result_values)
         return result
 
+
+    def __mul__(self,B):
+        result_values = []
+
+        if type(B) is int:
+            for value in list(self.values):
+                result_values.append(value * B)
+
+        else:
+            if (self.size == B.size):
+
+                for value in list(self.values):
+                    result_values.append(value * B.values[self.values.index(value)])
+
+        result = Matrix(*result_values)
+        return result
 
 if __name__ == '__main__':
     main()
